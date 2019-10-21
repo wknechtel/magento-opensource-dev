@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  m23:
+    build: ./magento-os/
+    ports:
+      - "8088:80"
+    volumes:
+       - magento-os:/home/magento
+    tty: true
+    container_name: m23
+volumes:
+  magento-os:
