@@ -99,8 +99,6 @@ RUN sudo chown -R mysql:mysql /var/lib/mysql && \
 # Final tidbits
 RUN sudo apt --purge autoremove -y ; sudo apt clean
 
-# ENTRYPOINT [ "bash" ]
-
 ENTRYPOINT sudo chown -R mysql:mysql /var/lib/mysql && \
 	sudo service mysql start && \
 	sudo service sendmail start && \
