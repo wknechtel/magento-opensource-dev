@@ -43,7 +43,7 @@ Please note that this section will get updated with screenshots and whatnot at a
   ```
   127.0.0.1 magento2u.loc
   ```
-8. Once everything is finished up, You'll be able to visit http://magento2u.loc:8088.  Your administrative portal is at http://magento2u.loc:8088/admin.  Unless you changed thim in the Dockerfile, your username is "admin" and your password is "mageU123".
+8. Once everything is finished up, You'll be able to visit http://magento2u.loc:8088.  Your administrative portal is at http://magento2u.loc:8088/admin.  Unless you changed them in the Dockerfile, your username is "admin" and your password is "mageU123".
 9. Open up VS Code. You have some extensions to install:
     * [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
     * [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
@@ -73,4 +73,4 @@ There are three steps to removing the sample data. All these commands have to be
 3. `bin/magento setup:install`
 
 ## Copying Files Into and Out Of the Container
-Use `docker cp`. Check out the [documentation] for more info about that.
+Use `docker cp`. Check out the [documentation](https://docs.docker.com/engine/reference/commandline/cp/) for more info about that.
