@@ -17,6 +17,10 @@ There is already a [docker project](https://github.com/mike61988/magento2-dk) th
     * This is a recent development. Microsoft's remote development metapackage (Introduced in ~April of 2019) includes a Docker implementation that lets you attach VS Code directly to a docker container. You can install copies of VS Code extensions into the container's environment, so you can enable debugging, intellisense, and more super-simply. You don't even have to deal with port mapping - it just works. Also, you get a fully working terminal, so you really have a fully working envirnment in a box.
 4. Make it work as an everyday environment.
     * This feels like the future to me.  It's changed the way I develop, so I'd like to see others take advantage of it as well.
+5. Make file changes persistent.
+    * If you change anything inside of /home/magento, it will be persisted across rebuilds of the container, as long as you don't touch the docker volume. This makes development practical.
+    * Because we're using a volume, and because of the way VS Code works, the VS code container-installed extensions and cache files built for intellisense will also persist.
+    * **Please Note** that if you `sudo apt install` anything, or tweak any system configuration file, those changes will **not** persist across rebuilds unless you add those changes into the Dockerfile.
 
 ## First Steps
 Please note that this section will get updated with screenshots and whatnot at a later date, but for now you'll have to struggle along with text :-)
@@ -46,16 +50,27 @@ Please note that this section will get updated with screenshots and whatnot at a
     * [PHP Debug](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug)
     * [PHP Intellisense](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-intellisense)
 10. Once you have those installed and have re-opened VS Code, you'll notice a Docker Icon in the left-hand toolbar. Click it and look for the `magento-opensource-dev_m23` line under the `Containers` section.  Right-click over that and choose "Attach Visual Studio Code".
-11. VS Code will install some of your extensions inside the container. You will likely at this point get a message complaining that the interpreter for PHP could not be found.  This is located at /usr/bin/php. Click on the edit in settings button, and choose the `Remote` tab.  the click on the `edit in settings.json link`. Add your interpreter and a small settings tweak like this:
+11. VS Code will install some of your extensions inside the container. If, when you click on the extensions icon in VS Code, you do not see At least PHP Debug and PHP Intellisense installed in the container section, you can scroll up to your "enabled" section, and install them manually. You may get a message complaining that the interpreter for PHP could not be found.  This is located at /usr/bin/php. Click on the edit in settings button, and choose the `Remote` tab.  the click on the `edit in settings.json link`. Add your interpreter and a small settings tweak like this:
   ```
   {
     "php.suggest.basic": false,
     "php.executablePath": "/usr/bin/php"
   }
   ```
-12. Save your changes, and close out of the settings file. Re-open VSCode so that Intellisense can begin parsing through your source files.  This will take a while.
+12. You will probably also have to add a debugger config.  After verifying that the PHP debug extension is installed, go to the Debug menu and choose "Open Configurations" and choose PHP. Edit to your liking.  The default should be fine.
+12. Save your changes, and close out of the settings files. Re-open VSCode so that Intellisense can begin parsing through your source files.  This will take a long while.
 
 You're done!  Now you can edit to your heart's content, and even debug normally by hitting `F5` and your editor will behave like a proper IDE, but attached to a container.
 
 ## Restarting after a reboot
 Open VS Code, Click the Docker icon in the toolbar, right-click over the appropriate container, and hit start.  Give it a couple minutes for all the services to get going, and then right-click again and choose "Attach Visual Studio Code".
+
+## Removing Sample Data
+There are three steps to removing the sample data. All these commands have to be run from the shell provided within the docker container.  Either launch a terminal from inside VS Code, or launch one from a PowerShell command line with `docker exec -it m23 /bin/bash`.
+
+1. `cd /home/magento/www && bin/magento setup:uninstall`
+2. `cd /home/magento/magento2-sample-data && php -f dev/tools/build-sample-data.php -- --unlink --ce-source="/home/magento/www"`
+3. `bin/magento setup:install`
+
+## Copying Files Into and Out Of the Container
+Use `docker cp`. Check out the [documentation] for more info about that.
