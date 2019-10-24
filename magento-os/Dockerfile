@@ -77,16 +77,14 @@ USER magento
 WORKDIR /home/magento
 RUN git clone https://github.com/magento/magento2.git www 
 WORKDIR /home/magento/www
-RUN git checkout 2.3.1 --force && \
-	git checkout -b magento_2_3_1 && \
-	rm -rf .git && \
-	git init && \
-	git remote add origin https://github.com/magento/magento2-sample-data.git && \
-	git fetch && \
-	git checkout 2.3.1 --force && \
-	git pull origin 2.3.1 && \
-	rm -rf .git && \
-	composer install
+RUN git checkout 2.3.3
+WORKDIR /home/magento
+RUN git clone https://github.com/magento/magento2-sample-data.git 
+WORKDIR /home/magento/magento2-sample-data
+RUN git checkout 2.3.3
+RUN php -f dev/tools/build-sample-data.php -- --ce-source="/home/magento/www"
+WORKDIR /home/magento/www
+RUN composer update symfony/service-contracts
 RUN sudo chown -R mysql:mysql /var/lib/mysql && \
 	sudo service mysql start && \
 	sudo service sendmail start && \
