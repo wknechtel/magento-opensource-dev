@@ -58,7 +58,7 @@ Please note that this section will get updated with screenshots and whatnot at a
   }
   ```
 12. You will probably also have to add a debugger config.  After verifying that the PHP debug extension is installed, go to the Debug menu and choose "Open Configurations" and choose PHP. Edit to your liking.  The default should be fine.
-12. Save your changes, and close out of the settings files. Re-open VSCode so that Intellisense can begin parsing through your source files.  This will take a long while.
+13. Save your changes, and close out of the settings files. Re-open VSCode so that Intellisense can begin parsing through your source files.  This will take a long while.
 
 You're done!  Now you can edit to your heart's content, and even debug normally by hitting `F5` and your editor will behave like a proper IDE, but attached to a container.
 
