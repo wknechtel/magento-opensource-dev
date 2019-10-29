@@ -33,7 +33,7 @@ Please note that this section will get updated with screenshots and whatnot at a
     * [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
     * [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
     * [PHP Debug](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug)
-    * [PHP Intellisense](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-intellisense)
+    * [PHP Intelliphense](https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client)
 10. Once you have those installed and have re-opened VS Code, you'll notice a Docker Icon in the left-hand toolbar. Click it and look for the `magento-opensource-dev_m23` line under the `Containers` section.  Right-click over that and choose "Attach Visual Studio Code".
 11. VS Code will install some of your extensions inside the container. If, when you click on the extensions icon in VS Code, you do not see At least PHP Debug and PHP Intellisense installed in the container section, you can scroll up to your "enabled" section, and install them manually. You may get a message complaining that the interpreter for PHP could not be found.  This is located at /usr/bin/php. Click on the edit in settings button, and choose the `Remote` tab.  the click on the `edit in settings.json link`. Add your interpreter and a small settings tweak like this:
   ```
@@ -72,7 +72,7 @@ There is already a [docker project](https://github.com/mike61988/magento2-dk) th
     * Use a software stack that more closely follows Magento's best practices (Nginx/PHP-FPM over Apache/mod_php)
     * Don't automatically start off as root. PHP code should belong to a user, and PHP-FPM should fire off using that user's permissions.  This is easier, simpler, and more real-world than making everything run as the root user. The user account does have passwordless `sudo` capabilities.
 3. Deeply integrate VS Code with Docker.
-    * This is a recent development. Microsoft's remote development metapackage (Introduced in ~April of 2019) includes a Docker implementation that lets you attach VS Code directly to a docker container. You can install copies of VS Code extensions into the container's environment, so you can enable debugging, intellisense, and more super-simply. You don't even have to deal with port mapping - it just works. Also, you get a fully working terminal, so you really have a fully working envirnment in a box.
+    * This is a recent development. Microsoft's [remote development metapackage](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) (Introduced in ~April of 2019) includes a Docker implementation that lets you attach VS Code directly to a docker container. You can install copies of VS Code extensions into the container's environment, so you can enable debugging, intellisense, and more super-simply. You don't even have to deal with port mapping - it just works. Also, you get a fully working terminal, so you really have a fully working envirnment in a box.
 4. Make it work as an everyday environment.
     * This feels like the future to me.  It's changed the way I develop, so I'd like to see others take advantage of it as well.
 5. Make file changes persistent.
