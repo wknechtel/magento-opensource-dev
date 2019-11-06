@@ -10,32 +10,33 @@ Please note that this section will get updated with screenshots and whatnot at a
 1. Download and install [Vistual Studio Code](https://code.visualstudio.com/).
 2. Download and install [Docker Desktop](https://www.docker.com/products/docker-desktop). This will necessitate you creating a free Docker Hub account. 
   >*Using Docker Desktop assumes you're running Windows 10 Pro. Windows 10 Home can work, but you'll need [Docker Toolbox](https://docs.docker.com/toolbox/toolbox_install_windows/) instead. Personally, I believe it's worth having Windows 10 Pro as Hyper-V is much more gentle with resource utilization than an identical instance of Virtual Box, which is what Docker Toolbox uses. Linux Hosts can probably use Docker Toolbox with the Xen hypervisor, which should have similar performance to Hyper-V. I'm not sure what hypervisor OSX users will have to use.*
-3. Open a command prompt to run a few commands. Windows users should use Powershell, standard terminals should work for Linux and OSX.
-4. Clone this repository to wherever it makes sense for you. For example:
+3. Go into Docker's settings and allocate at least 4 CPUs and 4GB RAM to the docker engine. This will make a huge difference in performance, and make initial setup easier, especially when it comes to the indexing processs used by the Intelliphense plugin.
+4. Open a command prompt to run a few commands. Windows users should use Powershell, standard terminals should work for Linux and OSX.
+5. Clone this repository to wherever it makes sense for you. For example:
   ```
   cd C:\Users\MageDev\Development
   git clone https://github.com/wknechtel/magento-opensource-dev.git
   cd magento-opensource-dev
   ```
-5. Now we use docker-compose to build and bring up the environment:
+6. Now we use docker-compose to build and bring up the environment:
   ```
   docker-compose up -d
   ```
-6. Give it some time. This can take 20 minutes to an hour depending on your system and your internet connection speed.
-7. While waiting for that to finish, edit your hosts file (C:\Windows\System32\drivers\etc\hosts in Windows, /etc/hosts elswhere) and add this line (You'll need administrative permission to save the file changes):
+7. Give it some time. This can take 20 minutes to an hour depending on your system and your internet connection speed.
+8. While waiting for that to finish, edit your hosts file (C:\Windows\System32\drivers\etc\hosts in Windows, /etc/hosts elswhere) and add this line (You'll need administrative permission to save the file changes):
   ```
   127.0.0.1 magento2u.loc
   ```
-  *The IP address might be different depending on your OS.  Use `Docker Inspect` to figure out what IP to use.*
+  *The IP address might be different depending on your OS.  Use `docker inspect` to figure out what IP to use.*
 
-8. Once everything is finished up, You'll be able to visit http://magento2u.loc:8088.  Your administrative portal is at http://magento2u.loc:8088/admin.  Unless you changed them in the Dockerfile, your username is "admin" and your password is "mageU123".
-9. Open up VS Code. You have some extensions to install:
+9. Once everything is finished up, You'll be able to visit http://magento2u.loc:8088.  Your administrative portal is at http://magento2u.loc:8088/admin.  Unless you changed them in the Dockerfile, your username is "admin" and your password is "mageU123".
+10. Open up VS Code. You have some extensions to install:
     * [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
     * [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
     * [PHP Debug](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug)
     * [PHP Intelliphense](https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client)
-10. Once you have those installed and have re-opened VS Code, you'll notice a Docker Icon in the left-hand toolbar. Click it and look for the `magento-opensource-dev_m23` line under the `Containers` section.  Right-click over that and choose "Attach Visual Studio Code".
-11. VS Code will install some of your extensions inside the container. If, when you click on the extensions icon in VS Code, you do not see At least PHP Debug and PHP Intellisense installed in the container section, you can scroll up to your "enabled" section, and install them manually. You may get a message complaining that the interpreter for PHP could not be found.  This is located at /usr/bin/php. Click on the edit in settings button, and choose the `Remote` tab.  the click on the `edit in settings.json link`. Add your interpreter and a small settings tweak like this:
+11. Once you have those installed and have re-opened VS Code, you'll notice a Docker Icon in the left-hand toolbar. Click it and look for the `magento-opensource-dev_m23` line under the `Containers` section.  Right-click over that and choose "Attach Visual Studio Code".
+12. VS Code will install some of your extensions inside the container. If, when you click on the extensions icon in VS Code, you do not see At least PHP Debug and PHP Intellisense installed in the container section, you can scroll up to your "enabled" section, and install them manually. You may get a message complaining that the interpreter for PHP could not be found.  This is located at /usr/bin/php. Click on the edit in settings button, and choose the `Remote` tab.  the click on the `edit in settings.json link`. Add your interpreter and a small settings tweak like this:
   ```
   {
     "php.suggest.basic": false,
@@ -43,7 +44,7 @@ Please note that this section will get updated with screenshots and whatnot at a
   }
   ```
 
-12. You will probably also have to add a debugger config.  After verifying that the PHP debug extension is installed, go to the Debug menu and choose "Open Configurations" and choose PHP. Edit to your liking.  Something like this should be fine:
+13. You will probably also have to add a debugger config.  After verifying that the PHP debug extension is installed, go to the Debug menu and choose "Open Configurations" and choose PHP. Edit to your liking.  Something like this should be fine:
   ```
   {
     "version": "0.2.0",
@@ -58,7 +59,7 @@ Please note that this section will get updated with screenshots and whatnot at a
   }
   ```
 
-13. Save your changes, and close out of the settings files. Re-open VSCode so that Intellisense can begin parsing through your source files.  This will take a long while.
+14. Save your changes, and close out of the settings files. Re-open VSCode so that Intellisense can begin parsing through your source files.  This will take a long while.
 
 You're done!  Now you can edit to your heart's content, and even debug normally by hitting `F5` or `Debug -> Start Debugging`, and your editor will behave like a proper IDE, but attached to a container.
 
